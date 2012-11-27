@@ -1,0 +1,22 @@
+---
+- hosts: riakservers
+  vars:
+    riak_package: riak_1.2.1-1_amd64.deb
+    riak_url: http://downloads.basho.com.s3-website-us-east-1.amazonaws.com/riak/CURRENT/ubuntu/lucid
+
+  sudo: True
+  tasks:
+  - name: update apt cache
+    apt: update_cache=yes
+  - name: update/install wget
+    apt: pkg=wget state=latest
+  - name: ensure libssl 0.9.8 is installed
+    apt: pkg=libssl0.9.8 state=latest
+  - name: update libncurses5
+    apt: pkg=libncurses5 state=latest
+  - name: download Riak debian package
+    command: wget ${riak_url}/${riak_package}
+  - name: install Riak
+    command: dpkg -i ${riak_package}
+  - include: riak_eleveldb_config.yaml
+

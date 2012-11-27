@@ -1,0 +1,5 @@
+---
+  - name: update app.config
+    action: template src=templates/riak_eleveldb.template dest=/etc/riak/app.config
+  - name: update vm.args
+    action: template src=templates/riak_vm.args.template dest=/etc/riak/vm.args

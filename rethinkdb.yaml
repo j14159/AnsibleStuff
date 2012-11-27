@@ -1,0 +1,12 @@
+---
+- hosts: rethinkservers
+  sudo: True
+  tasks:
+  - name: update apt cache
+    apt: update_cache=yes
+  - name: python deps
+    apt: pkg=python-software-properties state=latest
+  - name: add rethinkdb apt repository
+    command: add-apt-repository ppa:rethinkdb/ppa
+  - name: update apt cache since rethinkdb repo added
+    apt: pkg=rethinkdb state=latest 
