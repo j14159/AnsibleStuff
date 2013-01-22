@@ -1,0 +1,6 @@
+[couchbaseservers]
+192.168.33.100
+
+[riakservers]
+192.168.33.10
+

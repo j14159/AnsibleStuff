@@ -1,0 +1,21 @@
+---
+- hosts: couchbaseservers
+  vars:
+    couchbase_package: couchbase-server-community_x86_64_2.0.0.deb
+    couchbase_url: http://packages.couchbase.com/releases/2.0.0
+    user: vagrant
+
+  sudo: True
+  tasks:
+  - name: update apt cache
+    apt: update_cache=yes
+  - name: update/install wget
+    apt: pkg=wget state=latest
+  - name: ensure libssl 0.9.8 is installed
+    apt: pkg=libssl0.9.8 state=latest
+  - name: update libncurses5
+    apt: pkg=libncurses5 state=latest
+  - name: download couchbase community
+    command: wget ${couchbase_url}/${couchbase_package}
+  - name: install couchbase
+    command: dpkg -i ${couchbase_package}
