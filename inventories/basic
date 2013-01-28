@@ -4,3 +4,5 @@
 [riakservers]
 192.168.33.10
 
+[elasticsearchservers]
+192.168.34.10
