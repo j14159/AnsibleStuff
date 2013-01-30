@@ -1,0 +1,9 @@
+cluster.name: {{ cluster_name }}
+node.master: {{ master_node }}
+node.data: {{ data_node }}
+network.host: {{ inventory_hostname }}
+
+discovery.zen.ping.multicast.enabled: false
+discovery.zen.ping.unicast.hosts: {% for host in groups['es_data'] -%}
+    {{ host }}:9300{% if not loop.last %}, {% endif %}
+  {%- endfor -%}

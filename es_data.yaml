@@ -1,0 +1,25 @@
+---
+- hosts: es_data
+  vars:
+    es_package:  elasticsearch-0.20.2.deb
+    es_url:  http://download.elasticsearch.org/elasticsearch/elasticsearch
+    cluster_name:  gumby
+    data_node:  "true"
+    master_node: "true"
+
+  sudo: True
+  tasks:
+  - name: update apt cache
+    apt: update_cache=yes
+  - name: update/install wget
+    apt: pkg=wget state=latest
+  - name: install java
+    apt: pkg=openjdk-6-jre-headless state=latest
+  - name: download ES debian package
+    command: wget ${es_url}/${es_package}
+  - name: install ES debian package
+    command: dpkg -i ${es_package}
+  - name: configure ES LB node
+    action: template src=templates/elasticsearch.template dest=/etc/elasticsearch/elasticsearch.yml
+  - name: restart ES
+    command: /etc/init.d/elasticsearch restart
