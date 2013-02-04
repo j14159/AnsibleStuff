@@ -2,7 +2,7 @@
 - hosts: riakservers
   vars:
     riak_package: riak_1.2.1-1_amd64.deb
-    riak_url: http://downloads.basho.com.s3-website-us-east-1.amazonaws.com/riak/CURRENT/ubuntu/lucid
+    riak_url: http://s3.amazonaws.com/downloads.basho.com/riak/1.2/1.2.1/ubuntu/lucid
 
   sudo: True
   tasks:
