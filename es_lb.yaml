@@ -21,5 +21,11 @@
     command: dpkg -i ${es_package}
   - name: configure ES LB node
     action: template src=templates/elasticsearch.template dest=/etc/elasticsearch/elasticsearch.yml
+  - name: Install hard file limits in limits.conf with backup
+    lineinfile: state=present backup=yes create=no dest=/etc/security/limits.conf line="root\thard\tnofile\t40000" regexp="^root\thard\tnofile"
+    when_set: 40000
+  - name: Install soft file limits in limits.conf
+    lineinfile: state=present create=no dest=/etc/security/limits.conf line="root\tsoft\tnofile\t40000" regexp="^root\tsoft\tnofile"
+    when_set: 40000
   - name: restart ES
     command: /etc/init.d/elasticsearch restart

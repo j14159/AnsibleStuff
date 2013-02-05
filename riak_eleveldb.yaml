@@ -19,4 +19,11 @@
   - name: install Riak
     command: dpkg -i ${riak_package}
   - include: riak_eleveldb_config.yaml
-
+  - name: Install hard file limits in limits.conf with backup
+    lineinfile: state=present backup=yes create=no dest=/etc/security/limits.conf line="root\thard\tnofile\t40000" regexp="^root\thard\tnofile"
+    when_set: 40000
+  - name: Install soft file limits in limits.conf
+    lineinfile: state=present create=no dest=/etc/security/limits.conf line="root\tsoft\tnofile\t40000" regexp="^root\tsoft\tnofile"
+    when_set: 40000
+  - name: restart riak
+    command: /etc/init.d/riak restart
