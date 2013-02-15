@@ -1,0 +1,15 @@
+---
+- hosts: eventstorehosts
+  vars:
+    eventstore_package: eventstore-mono-1.0.1.tgz
+    eventstore_package_path: .
+  sudo: True
+  tasks:
+    - name: update apt cache
+      apt: update_cache=yes
+    - name: install complete mono
+      apt: pkg=mono-complete state=latest
+    - name: copy eventstore tarball
+      copy: src=${eventstore_package_path}/${eventstore_package} dest=~/${eventstore_package}
+    - name: unpack eventstore
+      command: tar xvzf ${eventstore_package}
